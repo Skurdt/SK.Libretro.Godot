@@ -12,7 +12,7 @@ config_version=5
 
 config/name="sklibretro-demo"
 run/main_scene="uid://bh8x3sbal8nds"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://Textures/icon.svg"
 
 [display]
@@ -20,6 +20,10 @@ config/icon="res://Textures/icon.svg"
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/size/resizable=false
+
+[dotnet]
+
+project/assembly_name="sklibretro-demo"
 
 [input]
 
