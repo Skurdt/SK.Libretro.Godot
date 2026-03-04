@@ -76,19 +76,18 @@ func _on_options_ready(categories, definitions, values):
 				core_option_dropdown.add_item(value.GetValue())
 				game_option_dropdown.add_item(value.GetValue())
 
-			for i in range(core_option_dropdown.item_count):
-				var dropdown_value = core_option_dropdown.get_item_text(i)
-				var current_value = values[def_key]
-				if dropdown_value == current_value:
-					core_option_dropdown.select(i)
-					break
+			if values.has(def_key):
+				for i in range(core_option_dropdown.item_count):
+					var dropdown_value = core_option_dropdown.get_item_text(i)
+					if dropdown_value == values[def_key]:
+						core_option_dropdown.select(i)
+						break
 
-			for i in range(game_option_dropdown.item_count):
-				var dropdown_value = game_option_dropdown.get_item_text(i)
-				var current_value = values[def_key]
-				if dropdown_value == current_value:
-					game_option_dropdown.select(i)
-					break
+				for i in range(game_option_dropdown.item_count):
+					var dropdown_value = game_option_dropdown.get_item_text(i)
+					if dropdown_value == values[def_key]:
+						game_option_dropdown.select(i)
+						break
 			
 			# TODO: enable when game options will be available
 			game_option_dropdown.visible = false
