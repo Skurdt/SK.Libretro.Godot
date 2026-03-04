@@ -1,5 +1,10 @@
 extends Node
 
+@export var monitor_node: MeshInstance3D
+@export_dir var core_directory: String
+@export var core_name: String
+@export_global_file var rom_path: String
+
 @onready var options_scene = preload("res://Scenes/core_options.tscn")
 @onready var category_scene = preload("res://Scenes/core_option_category.tscn")
 @onready var option_scene = preload("res://Scenes/core_option.tscn")
@@ -12,16 +17,12 @@ func _ready():
 
 func _unhandled_input(event):
 	if event.is_action_pressed("retro_start_emulation"):
-		var monitor_node = get_node("denirosmagicmon")
 		if !monitor_node:
 			print("monitor node not found")
 			return
-		
+
 		clear_options()
-		#Libretro.StartContent(monitor_node, "D:/Libretro", "snes9x", "E:/Roms/Super Mario World (USA).sfc")
-		Libretro.StartContent(monitor_node, "D:/Libretro", "mame2003_plus", "E:/Roms/mame2003-plus/ssf2.zip")
-		#Libretro.StartContent(monitor_node, "D:/Libretro", "mupen64plus_next", "E:/Roms/GoldenEye 007 (USA).z64")
-		#Libretro.StartContent(monitor_node, "D:/Libretro", "ppsspp", "E:/Roms/0723 - Killzone - Liberation (Europe) (En,Fr,De,Es,It,Nl,Pl,Ru).iso")
+		Libretro.StartContent(monitor_node, core_directory, core_name, rom_path)
 
 	if event.is_action_pressed("retro_stop_emulation"):
 		Libretro.StopContent()
