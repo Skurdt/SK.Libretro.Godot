@@ -34,6 +34,6 @@ sources.append("SKLibretro/external/libretro-common/gfx/scaler/pixconv.c")
 sources.append("SKLibretro/external/libretro-common/string/stdstring.c")
 sources.append("SKLibretro/external/libretro-common/vfs/vfs_implementation.c")
 
-library = env.SharedLibrary("../Demo/SKLibretro/SKLibretro.{}.{}.{}{}".format(env["platform"], env["target"], env["arch"], env["SHLIBSUFFIX"]), source=sources)
+library = env.SharedLibrary("../Demo/SKLibretro/sklibretro.{}.{}.{}{}".format(env["platform"], env["target"], env["arch"], env["SHLIBSUFFIX"]), source=sources)
 
 Default(library)

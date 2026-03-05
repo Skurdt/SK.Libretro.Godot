@@ -9,7 +9,7 @@
             "type": "cppvsdbg",
             "request": "launch",
             "preLaunchTask": "build-debug",
-            "program": "D:/Godot/Godot_v4.4.1-stable_win64.exe",
+            "program": "D:/Godot/Godot_v4.6.1-stable_mono_win64.exe",
             "args": ["--path", "${workspaceFolder}/Demo"],
             "cwd": "${workspaceFolder}"
         }

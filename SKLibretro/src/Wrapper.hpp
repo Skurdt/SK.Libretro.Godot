@@ -44,17 +44,19 @@ public:
     void StopContent();
 
     const std::unordered_map<std::string, OptionCategory>& GetOptionCategories() const { return m_options_handler->GetCategories(); }
-    const std::unordered_map<std::string, OptionDefinition>& GetOptionDefinitions() const { return m_options_handler->GetDefinitions(); }
-    const std::unordered_map<std::string, std::string>& GetOptionValues() const { return m_options_handler->GetValues(); }
+    const std::unordered_map<std::string, OptionDefinition>& GetOptions() const { return m_options_handler->GetOptions(); }
     void SetCoreOption(const std::string& key, const std::string& value);
+    void SetGameOption(const std::string& key, const std::string& value);
 
     void _input(const godot::Ref<godot::InputEvent>& event);
     void _process(double delta);
 
     godot::MeshInstance3D* m_node;
 
-    const std::string& GetRootDirectory() const { return m_root_directory; }
-    const std::string& GetTempDirectory() const { return m_temp_directory; }
+    const std::string& GetRootDirectory() const;
+    const std::string& GetTempDirectory() const;
+    std::string GetCoreName() const;
+    std::string GetGameName() const;
 
     std::unique_ptr<Core> m_core = nullptr;
     std::unique_ptr<EnvironmentHandler> m_environment_handler = nullptr;

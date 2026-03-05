@@ -1,18 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://bh8x3sbal8nds"]
+[gd_scene format=3 uid="uid://bh8x3sbal8nds"]
 
 [ext_resource type="PackedScene" uid="uid://clejifnsfcmsn" path="res://Scenes/magic_deniro_80_hor.tscn" id="2_c6dvc"]
 [ext_resource type="Script" uid="uid://bqeoe2amot06a" path="res://Scripts/libretro.gd" id="2_tr2i4"]
 
-[node name="Root" type="Node2D"]
+[node name="Root" type="Node2D" unique_id=1223919723]
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=531777016]
 transform = Transform3D(1, 0, 0, 0, 0.979935, 0.199317, 0, -0.199317, 0.979935, 0, 1.26506, 0.606928)
 
-[node name="magic-deniro-80-hor" parent="." instance=ExtResource("2_c6dvc")]
+[node name="magic-deniro-80-hor" parent="." unique_id=1566405166 node_paths=PackedStringArray("monitor_node") instance=ExtResource("2_c6dvc")]
 script = ExtResource("2_tr2i4")
+monitor_node = NodePath("denirosmagicmon")
+root_directory = "D:/Libretro"
+core_name = "mupen64plus_next"
+rom_path = "E:/Roms/GoldenEye 007 (USA).z64"
 
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1000841183]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0138264, 1.70309, 1.532)
 omni_range = 2.2381
 
-[node name="Libretro" type="Libretro" parent="."]
+[node name="Libretro" type="Libretro" parent="." unique_id=1820889877]
+
+[editable path="magic-deniro-80-hor"]

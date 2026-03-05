@@ -63,8 +63,10 @@ public:
     const godot::String& GetInfo() const { return m_info; }
     const godot::String& GetInfoCategorized() const { return m_info_categorized; }
     const godot::String& GetCategoryKey() const { return m_category_key; }
-    const godot::Array& GetValues() const { return m_values; }
+    const godot::Array& GetPossibleValues() const { return m_possible_values; }
     const godot::String& GetDefaultValue() const { return m_default_value; }
+    const godot::String& GetCoreValue() const { return m_core_value; }
+    const godot::String& GetGameValue() const { return m_game_value; }
 
 private:
     godot::String m_desc;
@@ -72,8 +74,10 @@ private:
     godot::String m_info;
     godot::String m_info_categorized;
     godot::String m_category_key;
-    godot::Array m_values;
+    godot::Array m_possible_values;
     godot::String m_default_value;
+    godot::String m_core_value;
+    godot::String m_game_value;
     
 protected:
     static void _bind_methods()
@@ -83,8 +87,10 @@ protected:
         godot::ClassDB::bind_method(godot::D_METHOD("GetInfo"), &GetInfo);
         godot::ClassDB::bind_method(godot::D_METHOD("GetInfoCategorized"), &GetInfoCategorized);
         godot::ClassDB::bind_method(godot::D_METHOD("GetCategoryKey"), &GetCategoryKey);
-        godot::ClassDB::bind_method(godot::D_METHOD("GetValues"), &GetValues);
+        godot::ClassDB::bind_method(godot::D_METHOD("GetPossibleValues"), &GetPossibleValues);
         godot::ClassDB::bind_method(godot::D_METHOD("GetDefaultValue"), &GetDefaultValue);
+        godot::ClassDB::bind_method(godot::D_METHOD("GetCoreValue"), &GetCoreValue);
+        godot::ClassDB::bind_method(godot::D_METHOD("GetGameValue"), &GetGameValue);
     }
 };
 
@@ -102,6 +108,7 @@ public:
     static void StopContent();
 
     static void SetCoreOption(const godot::String& key, const godot::String& value);
+    static void SetGameOption(const godot::String& key, const godot::String& value);
 
     void _exit_tree();
     void _input(const godot::Ref<godot::InputEvent>& event);
@@ -114,8 +121,7 @@ private:
 
     static void NotifyOptionsReady();
     godot::Dictionary GetOptionCategories();
-    godot::Dictionary GetOptionDefinitions();
-    godot::Dictionary GetOptionValues();
+    godot::Dictionary GetOptions();
 
     static void _bind_methods();
 };

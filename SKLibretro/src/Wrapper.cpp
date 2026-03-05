@@ -339,7 +339,13 @@ void Wrapper::StopContent()
 void Wrapper::SetCoreOption(const std::string& key, const std::string& value)
 {
     if (m_options_handler)
-        m_options_handler->SetVariable(key, value);
+        m_options_handler->SetCoreOption(key, value);
+}
+
+void Wrapper::SetGameOption(const std::string& key, const std::string& value)
+{
+    if (m_options_handler)
+        m_options_handler->SetGameOption(key, value);
 }
 
 void Wrapper::_input(const godot::Ref<godot::InputEvent>& event)
@@ -535,6 +541,26 @@ void Wrapper::_process(double delta)
         analog_right = analog_right.normalized();
 
     m_input_handler->SetAnalogRight(0, ToShort(analog_right.x) * 0x7fff, ToShort(analog_right.y) * 0x7fff);
+}
+
+const std::string& Wrapper::GetRootDirectory() const
+{
+    return m_root_directory;
+}
+
+const std::string& Wrapper::GetTempDirectory() const
+{
+    return m_temp_directory;
+}
+
+std::string Wrapper::GetCoreName() const
+{
+    return m_core ? m_core->GetName() : std::string();
+}
+
+std::string Wrapper::GetGameName() const
+{
+    return m_game_path.empty() ? std::string() : std::filesystem::path(m_game_path).stem().string();
 }
 
 void Wrapper::StopEmulationThread()

@@ -41,6 +41,11 @@ void Libretro::SetCoreOption(const godot::String& key, const godot::String& valu
     Wrapper::GetInstance()->SetCoreOption(key.utf8().get_data(), value.utf8().get_data());
 }
 
+void Libretro::SetGameOption(const godot::String& key, const godot::String& value)
+{
+    Wrapper::GetInstance()->SetGameOption(key.utf8().get_data(), value.utf8().get_data());
+}
+
 void Libretro::_exit_tree()
 {
     StopContent();
@@ -64,10 +69,9 @@ void Libretro::NotifyOptionsReady()
     if (!m_instance)
         return;
 
-    auto categories     = m_instance->GetOptionCategories();
-    auto definitions    = m_instance->GetOptionDefinitions();
-    auto current_values = m_instance->GetOptionValues();
-    m_instance->call_deferred("emit_signal", "options_ready", categories, definitions, current_values);
+    auto categories = m_instance->GetOptionCategories();
+    auto options    = m_instance->GetOptions();
+    m_instance->call_deferred("emit_signal", "options_ready", categories, options);
 }
 
 Dictionary Libretro::GetOptionCategories()
@@ -84,10 +88,10 @@ Dictionary Libretro::GetOptionCategories()
     return result;
 }
 
-Dictionary Libretro::GetOptionDefinitions()
+Dictionary Libretro::GetOptions()
 {
     Dictionary result;
-    const auto& definitions = Wrapper::GetInstance()->GetOptionDefinitions();
+    const auto& definitions = Wrapper::GetInstance()->GetOptions();
     for (const auto& [key, value] : definitions)
     {
         Ref<LibretroOptionDefinition> definition = memnew(LibretroOptionDefinition);
@@ -96,26 +100,19 @@ Dictionary Libretro::GetOptionDefinitions()
         definition->m_info = value.info.c_str();
         definition->m_info_categorized = value.info_categorized.c_str();
         definition->m_category_key = value.category_key.c_str();
-        definition->m_values = Array();
-        for (const auto& val : value.values)
+        definition->m_possible_values = Array();
+        for (const auto& val : value.possible_values)
         {
             Ref<LibretroOptionValue> option_value = memnew(LibretroOptionValue);
             option_value->m_value = val.value.c_str();
             option_value->m_label = val.label.c_str();
-            definition->m_values.append(option_value);
+            definition->m_possible_values.append(option_value);
         }
         definition->m_default_value = value.default_value.c_str();
+        definition->m_core_value = value.core_value.c_str();
+        definition->m_game_value = value.game_value.c_str();
         result[String(key.c_str())] = definition;
     }
-    return result;
-}
-
-Dictionary Libretro::GetOptionValues()
-{
-    Dictionary result;
-    const auto& values = Wrapper::GetInstance()->GetOptionValues();
-    for (const auto& [key, value] : values)
-        result[String(key.c_str())] = String(value.c_str());
     return result;
 }
 
@@ -125,7 +122,8 @@ void Libretro::_bind_methods()
     ClassDB::bind_static_method("Libretro", D_METHOD("StartContent", "node", "root_directory", "core_name", "game_path"), &StartContent);
     ClassDB::bind_static_method("Libretro", D_METHOD("StopContent"), &StopContent);
     ClassDB::bind_static_method("Libretro", D_METHOD("SetCoreOption"), &SetCoreOption);
+    ClassDB::bind_static_method("Libretro", D_METHOD("SetGameOption"), &SetGameOption);
 
-    ADD_SIGNAL(MethodInfo("options_ready", PropertyInfo(Variant::DICTIONARY, "categories"), PropertyInfo(Variant::DICTIONARY, "definitions"), PropertyInfo(Variant::DICTIONARY, "current_values")));
+    ADD_SIGNAL(MethodInfo("options_ready", PropertyInfo(Variant::DICTIONARY, "categories"), PropertyInfo(Variant::DICTIONARY, "options")));
 }
 }
